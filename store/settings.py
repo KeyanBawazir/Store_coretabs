@@ -25,7 +25,7 @@ SECRET_KEY = 'fqqge=)!q3db8ee5w3u7-d9raiw6e@=3@+o&(90ij8v&h)xh_g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'hitenoise.middleware.WhiteNoiseMiddleware' ,
+    'whitenoise.middleware.WhiteNoiseMiddleware' ,
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -120,4 +120,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-ALLOWED_HOSTS = ['.herokuapp.com',]
+
