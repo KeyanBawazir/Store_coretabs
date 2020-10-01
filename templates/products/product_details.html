@@ -6,8 +6,10 @@
     <title>Product Details</title>
 </head>
 <body>
+    <div>{{product.brand}}</div>
     <h1>{{product.title}}</h1>
     <p>{{product.description}}</p>
+    <div>{{product.price}}</div>
     <a href="{% url 'view_products' %}">Back Home</a>
 </body>
 </html>
