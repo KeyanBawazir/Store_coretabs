@@ -1,5 +1,5 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseNotFound, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404,HttpResponseRedirect
+from django.http import HttpResponseNotFound
 from django.utils import timezone
 from .models import Product
 from .forms import AddProductForm 
@@ -23,11 +23,11 @@ def product_details(request, pk):
 
 def product_add(request):
     if request.method == 'POST':
-        form = AddProductForm(request.POST) 
+        form = AddProductForm(request.POST, request.FILES) 
        
         if form.is_valid():
             form.save() 
-            return render(request, 'products/product_add_successful.html')
+            return render(request, 'products/product_add_edit_successful.html')
     else:  
         form = AddProductForm()
     context = {
@@ -38,10 +38,10 @@ def product_add(request):
 def product_edit(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
-       form = AddProductForm(request.POST, instance=product) 
+       form = AddProductForm(request.POST, request.FILES, instance=product) 
        if form.is_valid():
             form.save() 
-            return render(request, 'products/product_edit_successful.html')
+            return render(request, 'products/product_add_edit_successful.html')
     else:  
         form = AddProductForm(instance=product) 
     context = {
@@ -52,18 +52,19 @@ def product_edit(request, pk):
 def product_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
-       form = AddProductForm(request.POST, instance=product) 
-       if form.is_valid():
-            product.delete()
-            #return render(request, 'products/product_confirm_del.html')
-            return HttpResponseRedirect('/')
+        form = AddProductForm(request.POST, request.FILES, instance=product) 
+        if form.is_valid():
+           product.delete()
+           # return HttpResponseRedirect('/')
+           return render(request, 'products/product_delete_successful.html')
     else:  
         form = AddProductForm(instance=product) 
-    context = {
-        'form':form
-    }     
+        context = {
+            'form':form,
+          
+        }     
     return render(request, 'products/product_delete.html',context)  
-
+   
 def show_time(request):
     now = timezone.now() 
     return render(request, 'time.html',{'time': now}) 

@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete Product</title>
-</head>
-<body>
-    <form action="" method="POST">
-        {% csrf_token %}
-        {{ form.as_p}}
-        <input type="submit" value="Delete" />
-    </form> 
-</body>
-</html>
+{% extends "base.html" %}
+{% block head_title %}Delete Product{% endblock %}
+
+{% block content %}
+<section class="form-section">
+    <h2 class="section-headline">Delete Product</h2>
+    <p class="section-description"> Are you sure deleted this item?</p>
+    <div class="form">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p style="display:inline-block;" >
+                <button type="submit">Delete</button>
+            </p>
+            <a class="back" href="{% url 'view_products' %}">Cancle</a>
+        </form>
+    </div>
+</section>
+{% endblock %}
