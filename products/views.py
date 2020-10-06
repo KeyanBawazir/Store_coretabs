@@ -52,18 +52,18 @@ def product_edit(request, pk):
 def product_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
-        form = AddProductForm(request.POST, request.FILES, instance=product) 
-        if form.is_valid():
+        #form = AddProductForm(request.POST, request.FILES, instance=product) 
+        #if form.is_valid():
            product.delete()
            # return HttpResponseRedirect('/')
            return render(request, 'products/product_delete_successful.html')
-    else:  
-        form = AddProductForm(instance=product) 
-        context = {
-            'form':form,
+    #else:  
+     #   form = AddProductForm(instance=product) 
+      #  context = {
+       #     'form':form,
           
-        }     
-    return render(request, 'products/product_delete.html',context)  
+        #}     
+    return render(request, 'products/product_delete.html',{'product':product})  
    
 def show_time(request):
     now = timezone.now() 

@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 #from django.contrib.auth.models import User This not best praciket
 from django.contrib.auth import get_user_model
-User = get_user_model()
+User = get_user_model()# This best pracket
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=False, help_text='Optional')
     last_name = forms.CharField(max_length=30, required=False, help_text='Optional')

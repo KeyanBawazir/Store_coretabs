@@ -4,7 +4,7 @@
 {% block content %}
 <section class="form-section">
     <h2 class="section-headline">Delete Product</h2>
-    <p class="section-description"> Are you sure deleted this item?</p>
+    <h3 class="section-description"> {{product.title}} </h3>
     <div class="form">
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
