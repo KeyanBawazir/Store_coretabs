@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404,HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404,HttpResponseRedirect, redirect
 from django.http import HttpResponseNotFound
 from django.utils import timezone
 from .models import Product
@@ -22,33 +22,39 @@ def product_details(request, pk):
     return render(request,'products/product_details.html', context)
 
 def product_add(request):
-    if request.method == 'POST':
-        form = AddProductForm(request.POST, request.FILES) 
-       
-        if form.is_valid():
-            form.save() 
-            return render(request, 'products/product_add_edit_successful.html')
-    else:  
-        form = AddProductForm()
-    context = {
-        'form':form
-    }      
-    return render(request, 'products/product_add_edit.html',context)
+    if request.user.is_authenticated and request.user.is_superuser:
+        if request.method == 'POST':
+            form = AddProductForm(request.POST, request.FILES) 
+
+            if form.is_valid():
+                form.save() 
+                return render(request, 'products/product_add_edit_successful.html')
+        else:  
+            form = AddProductForm()
+        context = {
+            'form':form
+        }      
+        return render(request, 'products/product_add_edit.html',context)
+    else:
+        return redirect('view_products')    
 
 def product_edit(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    if request.method == 'POST':
-       form = AddProductForm(request.POST, request.FILES, instance=product) 
-       if form.is_valid():
-            form.save() 
-            return render(request, 'products/product_add_edit_successful.html')
-    else:  
-        form = AddProductForm(instance=product) 
-    context = {
-        'form':form
-    }     
-    return render(request, 'products/product_add_edit.html',context) 
-
+    if request.user.is_authenticated and request.user.is_superuser:
+        product = get_object_or_404(Product, pk=pk)
+        if request.method == 'POST':
+           form = AddProductForm(request.POST, request.FILES, instance=product) 
+           if form.is_valid():
+                form.save() 
+                return render(request, 'products/product_add_edit_successful.html')
+        else:  
+            form = AddProductForm(instance=product) 
+        context = {
+            'form':form
+        }     
+        return render(request, 'products/product_add_edit.html',context) 
+    else:    
+        return redirect('view_products')    
+        
 def product_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
