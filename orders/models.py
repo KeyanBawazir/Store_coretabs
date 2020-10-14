@@ -7,7 +7,7 @@ User = get_user_model()
 # Create your models here.
 class Order(models.Model):
     address = models.CharField(max_length=150, help_text='Enter Your Address')
-    user = models.ForeignKey(User, related_name='order', on_delete=models.CASCADE)
+    user = models.ForeignKey(User,  on_delete=models.CASCADE)
     items = models.ManyToManyField(Product)
 
     def __str__(self):

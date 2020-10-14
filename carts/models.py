@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum
 from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -11,8 +12,14 @@ class Cart(models.Model):
     items = models.ManyToManyField(Product)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def total_price(self):
+        
+        total= Cart.objects.all().aggregate(Sum('price'))
+        return total
+
     def __str__(self):
         return str(self.user)
+        
 @receiver(post_save, sender=User)      
 def create_user_cart(sender, instance, created, **kwargs):
     if created:

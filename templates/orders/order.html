@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block head_title %}Order{% endblock %}
+
+{% block content %}
+<h1>Make Order</h1>
+<p>Please fill in your address to make an order.</p>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p>Address:</p>
+    <p><input type="text" name="send_order"/></p>
+    <p>
+        <button type="submit">Order</button>
+    </p>
+</form>
+
+{% endblock %}
